@@ -1,0 +1,13 @@
+version: '3.0'
+services:
+  jtech-redis-server:
+    container_name: jtech-redis-server
+    image: redis
+    restart: always
+    command: redis-server --requirepass root
+    ports:
+    - 6379:6379
+    networks:
+    - dev-services
+networks:
+  dev-services:
