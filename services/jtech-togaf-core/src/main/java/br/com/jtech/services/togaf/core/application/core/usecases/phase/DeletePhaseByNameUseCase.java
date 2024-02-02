@@ -24,14 +24,15 @@ public class DeletePhaseByNameUseCase implements DeletePhaseByNameInputGateway {
     @Override
     public void delete(String name) {
         if (hasText(name)) {
-            Optional<Phase> phase = findPhaseByName(name);
+            Optional<Phase> phase = Optional.of(findPhaseByName(name));
             phase.ifPresent(deletePhaseOutputGateway::delete);
-        }
-        throw new PhaseNotFoundException("Phase '" + name + "' not found!");
+        } else
+            throw new PhaseNotFoundException("Phase '" + name + "' not found!");
     }
 
 
-    private Optional<Phase> findPhaseByName(String name) {
-        return findPhaseByNameOutputGateway.findByName(name);
+    private Phase findPhaseByName(String name) {
+        return findPhaseByNameOutputGateway.findByName(name)
+                .orElseThrow(() -> new PhaseNotFoundException("Phase '" + name + "' not found!"));
     }
 }

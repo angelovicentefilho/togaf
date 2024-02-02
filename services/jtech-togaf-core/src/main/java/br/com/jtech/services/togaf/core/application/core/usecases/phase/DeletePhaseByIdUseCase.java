@@ -24,14 +24,16 @@ public class DeletePhaseByIdUseCase implements DeletePhaseByIdInputGateway {
     @Override
     public void delete(Long id) {
         if (nonNull(id)) {
-            Optional<Phase> phase = findPhaseById(id);
+            Optional<Phase> phase = Optional.of(findPhaseById(id));
             phase.ifPresent(deletePhaseOutputGateway::delete);
+        } else {
+            throw new PhaseNotFoundException("Phase '" + id + "' not found!");
         }
-        throw new PhaseNotFoundException("Phase '" + id + "' not found!");
     }
 
-    private Optional<Phase> findPhaseById(Long id) {
-        return findPhaseByIdOutputGateway.findById(id);
+    private Phase findPhaseById(Long id) {
+        return findPhaseByIdOutputGateway.findById(id)
+                .orElseThrow(() -> new PhaseNotFoundException("Phase '" + id + "' not found!"));
     }
 
 }

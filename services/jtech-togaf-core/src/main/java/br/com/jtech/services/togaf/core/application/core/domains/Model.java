@@ -22,6 +22,6 @@ public class Model {
     private Set<Project> projects;
 
     public boolean hasPhases() {
-        return nonNull(getPhases());
+        return nonNull(getPhases()) && !getPhases().isEmpty();
     }
 }

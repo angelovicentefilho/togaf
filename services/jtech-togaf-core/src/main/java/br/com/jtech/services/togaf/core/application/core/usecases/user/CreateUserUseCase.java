@@ -20,6 +20,7 @@ public class CreateUserUseCase implements CreateUserInputGateway {
         this.findUserByEmailOutputGateway = findUserByEmailOutputGateway;
     }
 
+    @Override
     public Optional<User> create(User user) {
         if (!user.isValid()) {
             throw new UserDataInvalidException("User with invalid data!");

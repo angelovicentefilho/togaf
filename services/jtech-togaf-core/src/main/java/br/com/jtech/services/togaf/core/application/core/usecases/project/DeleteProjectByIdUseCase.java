@@ -24,13 +24,14 @@ public class DeleteProjectByIdUseCase implements DeleteProjectByIdInputGateway {
     @Override
     public void delete(Long id) {
         if (nonNull(id)) {
-            var projectFound = findProjectById(id);
+            var projectFound = Optional.of(findProjectById(id));
             projectFound.ifPresent(deleteProjectOuputGateway::delete);
-        }
-        throw new ProjectNotFoundException("Project '" + id + "' not found!");
+        } else
+            throw new ProjectNotFoundException("Project '" + id + "' not found!");
     }
 
-    private Optional<Project> findProjectById(Long id) {
-        return findProjectByIdOutputGateway.findById(id);
+    private Project findProjectById(Long id) {
+        return findProjectByIdOutputGateway.findById(id)
+                .orElseThrow(() -> new ProjectNotFoundException("Project '" + id + "' not found!"));
     }
 }

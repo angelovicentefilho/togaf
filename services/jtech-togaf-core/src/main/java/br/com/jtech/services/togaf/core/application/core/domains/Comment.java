@@ -21,7 +21,7 @@ public class Comment {
     private LocalDate createdAt;
 
     public boolean isComment() {
-        return nonNull(getComment());
+        return nonNull(getComment()) && !getComment().isEmpty();
     }
 
     public boolean isValid() {
