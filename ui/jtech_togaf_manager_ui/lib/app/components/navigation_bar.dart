@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jtech_togaf_manager_ui/app/modules/user/add_user_page.dart';
 import 'package:jtech_togaf_manager_ui/app/routes/app_routes.dart';
 import 'package:jtech_togaf_manager_ui/app/theme/theme_color.dart';
 
@@ -58,19 +57,19 @@ class NavigationSideBar extends StatelessWidget {
             ),
             const SizedBox(height: 20), // Espaçamento vertical entre os ícones
             Tooltip(
-              message: 'Create Users',
+              message: 'Manage Users',
               child: IconButton(
                 icon: const Icon(
                   Icons.person_add_outlined,
                   size: 32,
                 ),
                 onPressed: () {
-                  // Get.toNamed(Routes.ADD_USER);
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AddUserPage();
-                      });
+                  Get.toNamed(Routes.LIST_USER);
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (context) {
+                  //       return AddUserPage();
+                  //     });
                 },
               ),
             ),

@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:jtech_togaf_manager_ui/app/modules/user/user.dart';
 import 'package:jtech_togaf_manager_ui/app/modules/user/user_controller.dart';
 
-class AddUserPage extends StatefulWidget {
+class EditUserPage extends StatefulWidget {
+  final User user;
+
+  EditUserPage({required this.user});
+
   @override
-  _AddUserScreenState createState() => _AddUserScreenState();
+  _EditUserScreenState createState() => _EditUserScreenState();
 }
 
-class _AddUserScreenState extends State<AddUserPage> {
+class _EditUserScreenState extends State<EditUserPage> {
   final UserController _userController = UserController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _selectedRole = 'ADMIN';
+  String _selectedRole = '';
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -26,6 +30,15 @@ class _AddUserScreenState extends State<AddUserPage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _selectedRole = widget.user.role;
+    _usernameController.text = widget.user.username;
+    _passwordController.text = widget.user.password;
+    _emailController.text = widget.user.email;
+  }
+
+  @override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
@@ -37,7 +50,7 @@ class _AddUserScreenState extends State<AddUserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Adicionar Usuário'),
+        title: Text('Editar Usuário'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -102,24 +115,16 @@ class _AddUserScreenState extends State<AddUserPage> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    User newUser = User(
-                      id: "0",
-                      username: _usernameController.text,
-                      password: _passwordController.text,
-                      email: _emailController.text,
-                      role: _selectedRole,
-                    );
-
-                    _userController.addUser(newUser);
-
-                    _usernameController.clear();
-                    _passwordController.clear();
-                    _emailController.clear();
+                    widget.user.username = _usernameController.text;
+                    widget.user.password = _passwordController.text;
+                    widget.user.email = _emailController.text;
+                    widget.user.role = _selectedRole;
+                    _userController.updateUser(widget.user);
 
                     Navigator.of(context).pop(); // Volte para a página anterior
                   }
                 },
-                child: const Text('Adicionar Usuário'),
+                child: Text('Salvar Alterações'),
               ),
             ],
           ),

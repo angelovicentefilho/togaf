@@ -5,7 +5,7 @@ class TogafColorScheme {
   static ColorScheme get colorScheme {
     return ColorScheme(
         brightness: Brightness.light,
-        primary: TogafColors.primary,
+        primary: TogafColors.red,
         onPrimary: TogafColors.background,
         secondary: TogafColors.secondary,
         onSecondary: TogafColors.secondary,
